@@ -18,6 +18,8 @@
 
 package org.apache.flink.runtime.rpc.akka;
 
+import com.sun.istack.internal.Nullable;
+
 import org.apache.flink.api.common.time.Time;
 import org.apache.flink.runtime.concurrent.FutureUtils;
 import org.apache.flink.runtime.rpc.FencedRpcGateway;
@@ -40,7 +42,7 @@ import akka.pattern.Patterns;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.Nullable;
+//import javax.annotation.Nullable;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
@@ -85,7 +87,8 @@ class AkkaInvocationHandler implements InvocationHandler, AkkaBasedEndpoint, Rpc
     private final long maximumFramesize;
 
     // null if gateway; otherwise non-null
-    @Nullable private final CompletableFuture<Void> terminationFuture;
+    @Nullable
+    private final CompletableFuture<Void> terminationFuture;
 
     private final boolean captureAskCallStack;
 
@@ -179,6 +182,9 @@ class AkkaInvocationHandler implements InvocationHandler, AkkaBasedEndpoint, Rpc
 
     @Override
     public void start() {
+        /**note 接收方：{@link AkkaRpcActor} ， START是控制类消息
+         * question rpcEndpoint中包装了akka
+         */
         rpcEndpoint.tell(ControlMessages.START, ActorRef.noSender());
     }
 

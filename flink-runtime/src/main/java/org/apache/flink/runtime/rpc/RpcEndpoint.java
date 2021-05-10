@@ -64,6 +64,7 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
  *
  * <ul>
  *   <li>The RPC endpoint is created in a non-running state and does not serve any RPC requests.
+ *   note start初始化
  *   <li>Calling the {@link #start()} method triggers the start of the RPC endpoint and schedules
  *       overridable {@link #onStart()} method call to the main thread.
  *   <li>When the start operation ends the RPC endpoint is moved to the running state and starts to
@@ -187,7 +188,7 @@ public abstract class RpcEndpoint implements RpcGateway, AutoCloseableAsync {
      * <p>This method is called when the RpcEndpoint is being started. The method is guaranteed to
      * be executed in the main thread context and can be used to start the rpc endpoint in the
      * context of the rpc endpoint's main thread.
-     *
+     * 保证在主线程上下文中进行执行，并且能被用来启动rpcEndpoint在rpcEndpoint的上下文中，通常就是一些业务的逻辑。
      * <p>IMPORTANT: This method should never be called directly by the user.
      *
      * @throws Exception indicating that the rpc endpoint could not be started. If an exception

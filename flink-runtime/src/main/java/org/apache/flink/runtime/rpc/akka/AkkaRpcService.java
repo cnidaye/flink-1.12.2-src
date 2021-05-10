@@ -282,6 +282,7 @@ public class AkkaRpcService implements RpcService {
         // code is loaded dynamically (for example from an OSGI bundle) through a custom ClassLoader
         ClassLoader classLoader = getClass().getClassLoader();
 
+        // akkaInvocationHandler
         @SuppressWarnings("unchecked")
         RpcServer server =
                 (RpcServer)

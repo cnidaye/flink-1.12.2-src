@@ -143,6 +143,7 @@ class AkkaRpcActor<T extends RpcEndpoint & RpcGateway> extends AbstractActor {
 
     @Override
     public Receive createReceive() {
+        //match message -> process function
         return ReceiveBuilder.create()
                 .match(RemoteHandshakeMessage.class, this::handleHandshakeMessage)
                 .match(ControlMessages.class, this::handleControlMessage)
@@ -602,6 +603,8 @@ class AkkaRpcActor<T extends RpcEndpoint & RpcGateway> extends AbstractActor {
             akkaRpcActor.mainThreadValidator.enterMainThread();
 
             try {
+                //note 回调到rpcEndpoint， 启动, 又调用了rpcEndpoint的onStart（）方法
+                // called by the RpcService implementation to start the RpcEndpoint.
                 akkaRpcActor.rpcEndpoint.internalCallOnStart();
             } catch (Throwable throwable) {
                 akkaRpcActor.stop(

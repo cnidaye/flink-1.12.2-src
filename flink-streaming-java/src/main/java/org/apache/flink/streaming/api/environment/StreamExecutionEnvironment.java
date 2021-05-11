@@ -1898,10 +1898,11 @@ public class StreamExecutionEnvironment {
                 executorFactory,
                 "Cannot find compatible factory for specified execution.target (=%s)",
                 configuration.get(DeploymentOptions.TARGET));
-
+        //note
         CompletableFuture<JobClient> jobClientFuture =
                 executorFactory
                         .getExecutor(configuration)
+                        //streamGraph 就是 pipeline
                         .execute(streamGraph, configuration, userClassloader);
 
         try {
@@ -2016,6 +2017,7 @@ public class StreamExecutionEnvironment {
     @Internal
     public void addOperator(Transformation<?> transformation) {
         Preconditions.checkNotNull(transformation, "transformation must not be null.");
+        //note 集合：存储transformation , each one matching a function
         this.transformations.add(transformation);
     }
 

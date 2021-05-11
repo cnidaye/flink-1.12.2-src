@@ -83,6 +83,7 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 public abstract class RpcEndpoint implements RpcGateway, AutoCloseableAsync {
 
     protected final Logger log = LoggerFactory.getLogger(getClass());
+    
 
     // ------------------------------------------------------------------------
 
@@ -123,8 +124,16 @@ public abstract class RpcEndpoint implements RpcGateway, AutoCloseableAsync {
      */
     protected RpcEndpoint(final RpcService rpcService, final String endpointId) {
         this.rpcService = checkNotNull(rpcService, "rpcService");
+        /**note 每个RpcEndpoint对应了一个路径（endpointId和actorSystem共同确定），
+         *  每个路径对应一个Actor，其实现了RpcGateway接口
+         */
+
         this.endpointId = checkNotNull(endpointId, "endpointId");
 
+        /**note 方法内注释：Start a rpc server which forwards the remote procedure calls to the provided rpc endpoint.
+         *  rpcService 对应的是actorSystem的封装，
+         *  得到的rpcServer是对应的自身代理对象 self-gateway
+         */
         this.rpcServer = rpcService.startServer(this);
 
         this.mainThreadExecutor = new MainThreadExecutor(rpcServer, this::validateRunsInMainThread);
@@ -401,6 +410,7 @@ public abstract class RpcEndpoint implements RpcGateway, AutoCloseableAsync {
     // ------------------------------------------------------------------------
 
     /** Executor which executes runnables in the main thread context. */
+    // note 执行器，负责执行runnable
     protected static class MainThreadExecutor implements ComponentMainThreadExecutor {
 
         private final MainThreadExecutable gateway;

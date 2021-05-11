@@ -64,6 +64,7 @@ public class YarnJobClusterEntrypoint extends JobClusterEntrypoint {
     //  for a single Flink job.
     // ------------------------------------------------------------------------
 
+    //note yarn集群程序的入口，可以查看程序如何被启动
     public static void main(String[] args) {
         // startup checks and logging
         EnvironmentInformation.logEnvironmentInfo(

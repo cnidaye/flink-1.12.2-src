@@ -143,9 +143,10 @@ class AkkaRpcActor<T extends RpcEndpoint & RpcGateway> extends AbstractActor {
 
     @Override
     public Receive createReceive() {
-        //match message -> process function
+        //note match message -> process function
         return ReceiveBuilder.create()
                 .match(RemoteHandshakeMessage.class, this::handleHandshakeMessage)
+                //note 传过来的start message
                 .match(ControlMessages.class, this::handleControlMessage)
                 .matchAny(this::handleMessage)
                 .build();

@@ -52,6 +52,7 @@ public class YarnSessionClusterEntrypoint extends SessionClusterEntrypoint {
     protected DispatcherResourceManagerComponentFactory
             createDispatcherResourceManagerComponentFactory(Configuration configuration) {
         return DefaultDispatcherResourceManagerComponentFactory.createSessionComponentFactory(
+                //note get yarn instance
                 YarnResourceManagerFactory.getInstance());
     }
 

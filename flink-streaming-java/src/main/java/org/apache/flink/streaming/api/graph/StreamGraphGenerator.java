@@ -266,6 +266,7 @@ public class StreamGraphGenerator {
         alreadyTransformed = new HashMap<>();
 
         for (Transformation<?> transformation : transformations) {
+            //note 转换成StreamNode
             transform(transformation);
         }
 
@@ -399,6 +400,7 @@ public class StreamGraphGenerator {
                         translatorMap.get(transform.getClass());
 
         Collection<Integer> transformedIds;
+        //question 暂时不看
         if (translator != null) {
             transformedIds = translate(translator, transform);
         } else {

@@ -38,6 +38,8 @@ public class SimpleOperatorFactory<OUT> extends AbstractStreamOperatorFactory<OU
 
     /** Create a SimpleOperatorFactory from existed StreamOperator. */
     @SuppressWarnings("unchecked")
+    //note 简单工厂模式，根据上游得知，operator可能是由不同的流类型调用，根据不同的stream 返回
+    // 不同的模式，而不同的模式具有对应的特性方法。详情，自己看各个工厂的实现。
     public static <OUT> SimpleOperatorFactory<OUT> of(StreamOperator<OUT> operator) {
         if (operator == null) {
             return null;
